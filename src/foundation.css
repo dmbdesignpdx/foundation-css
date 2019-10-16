@@ -1,7 +1,7 @@
 /*
  * Foundation.css
  * Resets, normalizations, grid, breakpoints, and more.
- * v1.0.0
+ * v1.1.0
  *
  * Put what you need in critical, the rest at the begining of your
  * master stylesheet...
@@ -29,10 +29,8 @@
 
 @font-face {
   src:
-    local('Your Font'), 
-    local('YourFont'), /* Possible variant in naming, FYI */
-    /* 
-     * DO NOT use local() if you plan to preload the same font resource:
+    /*
+     * Uncomment if you are NOT preloading the same font resource.
      * With preload, the browser priortizes the resource by fetching and 
      * caching it immediately. If the browser finds it locally first, as 
      * directed with local(), it will use that and not bother fetching 
@@ -40,11 +38,15 @@
      * resource that won't be used.
      * You WILL get a warning in your console for doing that.
      */
+    /*
+    local('Your Font'), 
+    local('YourFont'),
+     */
     url('/fonts/YourFont.woff2') format('woff2'),
     url('/fonts/YourFOnt.woff') format('woff'); /* IE 10+, all browsers */
     /* 
      * TrueType and OpenType are excluded because their SUPPORTED percentage
-     * is actually worse than the Web Open Font Format
+     * is actually worse than WOFF.
      */
   font-family: 'Your Font';
   font-style: normal;
@@ -125,8 +127,11 @@ ul {
  * register the list as a list.
  */
 li::before {
-  content: '\200C';
-  position: absolute; /* Only needed if some lists will have list-style */
+  content: '\200B';
+  /* Uncomment if some lists will have list-style */
+  /*
+  position: absolute;
+   */
 }
 
 a,
@@ -151,8 +156,11 @@ address {
 }
 
 html {
-  font: 400 1.125em 'Your Font', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-  background: #FFF;
+  font: 400 1.125em 'Your Font', sans-serif
+  /* Uncomment if you plan on using emoji's */
+  /*
+    'Apple Color Emoji', 'Segoe UI Emoji'
+   */;
 }
 
 body {
@@ -191,12 +199,6 @@ summary {
   display: list-item; /* 'block' breaks in Firefox */
 }
 
-img,
-svg,
-object {
-  font-size: 0;
-}
-
 a {
   font-weight: 700;
   color: inherit;
@@ -210,9 +212,7 @@ table {
 
 select,
 button,
-input,
 [role=button] {
-  box-sizing: content-box;
   cursor: pointer;
 }
 
@@ -235,6 +235,18 @@ p {
   hyphens: none;
   /* Note: a 'lang' attr has to be defined in the <html> to use hyphens */
 }
+
+
+/* Uncomment ONLY if you have a substitute for focus */
+/*
+:focus {
+  outline: 0;
+}
+
+::-moz-focus-inner {
+  border: 0;
+}
+*/
 
 
 /*
@@ -299,8 +311,9 @@ p {
 
 /* 
  * iPhone X, XS, XR, XS Max Landscape
- * Only if meta viewport content has 'viewport-fit=cover'
+ * Uncomment if meta viewport content has 'viewport-fit=cover'
  */
+/*
 @media (min-width:810px) and (max-height:416px) {
   [data-wrap],
   [data-grid] {
@@ -308,6 +321,7 @@ p {
     padding-left: env(safe-area-inset-left);
   }
 }
+*/
 
 
 /* Tablet Landscape */
