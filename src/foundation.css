@@ -3,8 +3,8 @@
  * Resets, normalizations, grid, breakpoints, and more.
  * v1.1.0
  *
- * Put what you need in critical, the rest at the begining of your
- * master stylesheet...
+ * Put what you need in critical, the rest at the beginning of your
+ * main stylesheet...
  * And remove what you don't use!
  *
  * Contents:
@@ -16,11 +16,7 @@
  * 6. Simple Grid
  * 7. Browser Specific Rules
  * 8. OS Rules
- *
- * Note: 'Edge' refers to versions 12 to 18
  */
-
-
 
 
 /*
@@ -28,39 +24,74 @@
  */
 
 @font-face {
-  src:
-    /*
-     * Uncomment if you are NOT preloading the same font resource.
-     * With preload, the browser priortizes the resource by fetching and 
-     * caching it immediately. If the browser finds it locally first, as 
-     * directed with local(), it will use that and not bother fetching 
-     * what's in url(). And so you've told the browser to preload a 
-     * resource that won't be used.
-     * You WILL get a warning in your console for doing that.
-     */
-    /*
-    local('Your Font'), 
-    local('YourFont'),
-     */
-    url('/fonts/YourFont.woff2') format('woff2'),
-    url('/fonts/YourFOnt.woff') format('woff'); /* IE 10+, all browsers */
-    /* 
-     * TrueType and OpenType are excluded because their SUPPORTED percentage
-     * is actually worse than WOFF.
-     */
-  font-family: 'Your Font';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
+	src: url('/fonts/YourFont.woff2') format('woff2');
+	font-family: 'Your Font';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
 }
 
 
 /*
- * 2. Meta Viewport for IE 10+, Edge
+ * 2. Design Tokens
  */
 
- @-ms-viewport {
-  width: device-width;
+:root {
+	--color-blue: #00f;
+	--color-green: #0f0;
+	--color-red: #f00;
+	--color-yellow: #ff0;
+	--color-cyan: #0ff;
+	--color-magenta: #f0f;
+	--color-background: #ccc;
+	--color-surface: #fff;
+	--color-on-surface: #222;
+
+	--font-body: 'Your Family', sans-serif;
+	--font-heading: sans-serif;
+	--font-quote: serif;
+	--font-code: monospace;
+
+	--font-level-1: 7rem;
+	--font-level-2: 1rem;
+	--font-level-3: 1rem;
+	--font-level-4: 2rem;
+	--font-level-5: 1.75rem;
+	--font-level-6: 1.5rem;
+	--font-level-body: 1.125rem;
+
+	--font-weight-thin: 200;
+	--font-weight-light: 300;
+	--font-weight-regular: 400;
+	--font-weight-medium: 500;
+	--font-weight-bold: 700;
+	--font-weight-black: 900;
+
+	--line-height-heading: 1.2;
+	--line-height-body: 1.5;
+	--line-height-quote: 1.5;
+	--line-height-ui: 1;
+
+	--letter-spacing-heading: 0.01ch;
+	--letter-spacing-body: 0.02ch;
+
+	--space-1: 1rem;
+	--space-2: 2rem;
+	--space-3: 3rem;
+	--space-4: 6rem;
+	--space-5: 9rem;
+	--space-6: 15rem;
+	--space-7: 24rem;
+	--space-8: 39rem;
+	--space-9: 63rem;
+
+	--flow-space: 1.2em;
+
+	--elevation-1: 0 0.5rem 1rem rgba(0, 0, 20, 0.15);
+	--elevation-2: 0 1rem 2rem rgba(0, 0, 20, 0.18);
+	--elevation-3: 0 2rem 4rem rgba(0, 0, 20, 0.21);
+
+	--gap: 1rem;
 }
 
 
@@ -68,80 +99,30 @@
  * 3. Resets
  */
 
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ol,
-ul,
-dl,
-menu,
-dd,
-hr,
-pre,
-button,
-input,
-select,
-textarea,
-fieldset,
-legend,
-figure,
-blockquote,
-iframe,
-dialog,
-table,
-th,
-td,
-tbody,
-tr,
-tfoot,
-thead,
-colgroup {
-  padding: 0;
-  margin: 0;
-  border: 0;
-}
-
 input,
 select,
 progress,
 meter {
-  -moz-appearance: none;  /* Firefox */
-  -webkit-appearance: none;  /* Chrome, Safari */
-  appearance: none;  /* Edge, possibly future? */
+	-webkit-appearance: none;
+	appearance: none;
 }
 
-ol,
-ul {
-  list-style: none;
+li {
+	list-style: none;
 }
 
-/* 
- * Important!
- * If you plan to keep the above ruleset of ol and/or ul, then the ruleset 
- * below is needed for VoiceOver in Safari. Otherwise VoiceOver will not 
- * register the list as a list.
- */
 li::before {
-  content: '\200B';
-  /* Uncomment if some lists will have list-style */
-  /*
-  position: absolute;
-   */
+	content: "\200B";
 }
 
 a,
 abbr {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 dfn,
 address {
-  font-style: normal;
+	font-style: normal;
 }
 
 
@@ -152,68 +133,74 @@ address {
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+	box-sizing: border-box;
+	position: relative;
+	padding: 0;
+	margin: 0;
+	border: 0;
 }
 
 html {
-  font: 400 1.125em 'Your Font', sans-serif
-  /* Uncomment if you plan on using emoji's */
-  /*
-    'Apple Color Emoji', 'Segoe UI Emoji'
-   */;
+	font-size: 100%;
 }
 
 body {
-  -ms-text-size-adjust: 100%;  /* Edge, IE Mobile */
-  -moz-text-size-adjust: 100%;  /* Firefox Android */
-  -webkit-text-size-adjust: 100%;  /* iOS Safari 5+ */
-  text-size-adjust: 100%;
-  -ms-touch-action: manipulation;  /* IE 10 */
-  touch-action: manipulation;
-  -webkit-overflow-scrolling: touch;
-  -moz-osx-font-smoothing: grayscale;  /* Firefox Mac OS */
-  -webkit-font-smoothing: antialiased; /* Chrome, Safari Mac OS */
-  -webkit-tap-highlight-color: transparent;
-  -ms-overflow-style: -ms-autohiding-scrollbar; /* Mimic Mac OS for Windows */
+	-webkit-text-size-adjust: none;
+	text-size-adjust: none;
+	touch-action: manipulation;
+	-webkit-overflow-scrolling: touch;
+	-webkit-tap-highlight-color: transparent;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+	font-family: var(--font-body);
+	font-weight: var(--font-weight-regular);
+	font-size: var(--font-level-body);
+	letter-spacing: var(--letter-spacing-body);
+	line-height: var(--line-height-body);
+	color: var(--color-on-surface);
+	background-color: var(--color-background);
+	overflow-wrap: break-word;
 }
 
 input,
 select,
 button,
 textarea {
-  font: inherit;
+	font: inherit;
 }
 
-main, /* IE 10 */
-details, /* IE, Edge */
 video,
 img,
 object,
 svg,
 iframe,
 embed {
-  display: block;
-}
-
-summary {
-  display: list-item; /* 'block' breaks in Firefox */
+	display: block;
 }
 
 a {
-  font-weight: 700;
-  color: inherit;
-  white-space: nowrap;
+	font-weight: var(--font-weight-bold);
+	color: inherit;
+	white-space: nowrap;
+}
+
+a:not([class]) {
+	text-decoration-skip-ink: auto;
+}
+
+button,
+a {
+	line-height: var(--line-height-ui);
 }
 
 table {
-  border-collapse: collapse;
-  border-spacing: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 select,
 button,
 [role=button] {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 h1,
@@ -222,18 +209,14 @@ h3,
 h4,
 h5,
 h6 {
-  line-height: 1.2;
-  text-rendering: geometricPrecision;
+	line-height: var(--line-height-heading);
+	text-rendering: geometricPrecision;
+	text-wrap: balance;
 }
 
 p {
-  letter-spacing: 0.01em;
-  line-height: 1.5;
-  -ms-hyphens: none;  /* IE 10+, Edge */
-  -moz-hyphens: none;  /* Firefox < 45 */
-  -webkit-hyphens: none;  /* Safari 5+ */
-  hyphens: none;
-  /* Note: a 'lang' attr has to be defined in the <html> to use hyphens */
+	-webkit-hyphens: none;
+	hyphens: none;
 }
 
 
@@ -248,154 +231,72 @@ p {
 }
 */
 
-
-/*
- * 5. Helpers
- */
-
-/* Long bodies of text */
-.long {
-  text-rendering: optimizeSpeed;
-}
-
-/* Clear Float */
-.clearme {
-  clear: both;
-}
-
-/* No break */
-.nobr {
-  white-space: nowrap;
+:target {
+	scroll-margin-block-start: 5ex;
 }
 
 
 /*
- * 6. Simple Grid with Breakpoints
+ * 6. Simple Grid and Breakpoints
  */
+
+[data-flow] > * + * {
+	margin-block-start: var(--flow-space, 1em);
+}
 
 [data-wrap],
 [data-grid] {
-  width: 100%;
-  padding-right: 18px;
-  padding-left: 18px;
-  margin: 0 auto;
+	inline-size: 100%;
+	padding-inline: var(--gap);
+	margin-inline: auto;
 }
 
 [data-grid] {
-  display: grid;
-  grid: none / repeat(12, 1fr);
-  grid-column-gap: 18px;
-  column-gap: 18px;
+	display: grid;
+	grid: auto / repeat(6, 1fr);
+	column-gap: var(--gap);
 }
 
-/* Phone Landscape */
-@media (min-width:540px) {
+/* Small Screen */
+@media (min-width:48rem) {
 
-}
-
-/* Tablet Portrait */
-@media (min-width:766px) {
-
-  [data-wrap],
-  [data-grid] {
-    padding-right: 24px;
-    padding-left: 24px;
-  }
-
-  [data-grid] {
-    grid-column-gap: 24px;
-    column-gap: 24px;
-  }
+	:root {
+		--gap: 2rem;
+	}
 
 }
 
-/* 
- * iPhone X, XS, XR, XS Max Landscape
- * Uncomment if meta viewport content has 'viewport-fit=cover'
- */
+/* Medium Screen */
+@media (min-width:80rem) {
+
+	[data-wrap],
+	[data-grid] {
+		inline-size: 84vw;
+		max-inline-size: 90rem;
+		grid-template-columns: repeat(12, 1fr);
+	}
+
+}
+
+/* Large Screen */
+@media (min-width:120rem) {}
+
+
 /*
-@media (min-width:810px) and (max-height:416px) {
-  [data-wrap],
-  [data-grid] {
-    padding-right: env(safe-area-inset-right);
-    padding-left: env(safe-area-inset-left);
-  }
-}
-*/
-
-
-/* Tablet Landscape */
-@media (min-width:1022px) {
-
-}
-
-/* Desktop */
-@media (min-width:1278px) {
-
-  html {
-    font-size: 1.25em;
-  }
-
-  [data-wrap],
-  [data-grid] {
-    width: 84%;
-    max-width: 1436px;
-    padding-right: 30px;
-    padding-left: 30px;
-  }
-
-  [data-grid] {
-    grid-column-gap: 30px;
-    column-gap: 30px;
-  }
-
-}
-
-/* Large Desktop */
-@media (min-width:1678px) {
-
-  html {
-    font-size: 1.38em;
-  }
-
-}
-
-
-/* 
- * 7. Browser Specific Rules
- */
-
-/* Chrome & Opera */
-@supports (-webkit-app-region:drag) {
-
-}
-
-/* Safari */
-@supports (-webkit-marquee:revert) {
-
-}
-
-/* Firefox */
-@supports (-moz-orient:vertical) {
-
-}
-
-/* Edge */
-@supports (-ms-ime-align:auto) {
-
-}
-
-
-/* 
  * 8. OS Rules
  */
 
 /* Reduced motion */
-@media (prefers-reduced-motion:reduce) {
-
-}
+@media (prefers-reduced-motion:reduce) {}
 
 /* Theme */
 @media (prefers-color-scheme:dark) {
+	html {
+		color-scheme: dark;
+	}
 
+	body {
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing: antialiased;
+	}
 }
